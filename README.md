@@ -1,0 +1,2 @@
+# openspec_mockup_comparison
+モックアップとのUI比較するopenspecカスタムスキーマ
