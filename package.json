@@ -1,0 +1,37 @@
+{
+  "name": "openspec-mockup-comparison",
+  "version": "0.1.0",
+  "description": "Add-on for openspec-custom-testkit: a derived schema quality-driven-e2e-mockup that compares the UI with HTML/CSS mockups in the repository and gates the differences.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "openspec-mockup-comparison": "./install.mjs"
+  },
+  "scripts": {
+    "manifest": "node scripts/build-manifest.mjs",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test --test-concurrency=4 test/*.test.mjs",
+    "test:smoke": "node test/smoke/run.mjs"
+  },
+  "files": [
+    "install.mjs",
+    "lib",
+    "payload",
+    "LICENSE",
+    "README.md",
+    "docs",
+    "examples",
+    "upstream/manifest.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudabon/openspec_mockup_comparison.git"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.1",
+    "pixelmatch": "5.3.0"
+  }
+}
