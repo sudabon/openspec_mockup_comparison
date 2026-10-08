@@ -1,0 +1,11 @@
+body { margin: 0; font-family: sans-serif; background: #f5f6f8; color: #1d2433; }
+.login { width: 320px; margin: 64px auto; padding: 24px; background: #fff; border-radius: 8px; }
+.login h1 { margin: 0 0 16px; font-size: 24px; }
+.login-form { display: grid; gap: 12px; }
+.login-form label { display: grid; gap: 4px; font-size: 14px; }
+.login-form input { height: 32px; border: 1px solid #c7ccd6; border-radius: 4px; }
+.login-form button { height: 36px; border: 0; border-radius: 4px; background: #2457d6; color: #fff; }
+.clock { margin-top: 16px; font-size: 12px; color: #6b7280; }
+.cards { display: flex; gap: 8px; padding: 16px; }
+.card { width: 120px; height: 80px; background: #dbe4ff; }
+#box { width: 200px; height: 100px; margin: 20px; background: #ffd8a8; }
