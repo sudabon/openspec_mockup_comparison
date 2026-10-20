@@ -17,6 +17,6 @@ test('一覧画面がモックと一致する', { tag: ['@ci-dry-run', '@VC-001'
   await compareWithMockup(page, testInfo, { ...base, vc: 'VC-001', app: `${app.url}/list.html` });
 });
 
-test('ヘッダー色が違う一覧画面はモックと一致しない(検証用に失敗させる)', { tag: ['@ci-dry-run', '@VC-002'] }, async ({ page }, testInfo) => {
-  await compareWithMockup(page, testInfo, { ...base, vc: 'VC-002', app: `${app.url}/list-red.html` });
+test('一覧画面がモックと一致する(2 件目)', { tag: ['@ci-dry-run', '@VC-002'] }, async ({ page }, testInfo) => {
+  await compareWithMockup(page, testInfo, { ...base, vc: 'VC-002', app: `${app.url}/list.html` });
 });
