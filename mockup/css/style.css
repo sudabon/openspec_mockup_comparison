@@ -1,0 +1,13 @@
+/* selftest 用の最小モック(相対参照の CSS) */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: sans-serif; font-size: 14px; color: #222; background: #fff; }
+.samplebar { height: 40px; background: #fde68a; padding: 10px; }
+.hdr { height: 120px; background: #1e3a8a; color: #fff; padding: 24px; }
+.hdr h1 { margin: 0; font-size: 24px; }
+main { padding: 24px; }
+.primary { width: 160px; height: 40px; border: 0; background: #2563eb; color: #fff; }
+table { margin-top: 16px; border-collapse: collapse; width: 600px; }
+td { border: 1px solid #999; height: 32px; padding: 4px 8px; }
+.skeleton { position: fixed; inset: 0; background: #ccc; }
+.skeleton[hidden] { display: none; }
+.tall { height: 150px; background: #eee; }

@@ -1,0 +1,6 @@
+# openspec-e2e-mockup-gate.yml を PR から動かすための検証用スタブ(マージしない)
+name: e2e-mockup-gate-dry-run
+on: [pull_request]
+jobs:
+  gate:
+    uses: ./.github/workflows/openspec-e2e-mockup-gate.yml

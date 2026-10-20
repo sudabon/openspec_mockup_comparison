@@ -1,4 +1,4 @@
-schema: spec-driven
+schema: spec-driven-e2e-mockup
 
 # Project context (optional)
 # This is shown to AI when creating artifacts.
@@ -30,3 +30,11 @@ schema: spec-driven
 #     archive:
 #       guidance:
 #         - Summarize the archive outcome before finishing
+
+context: |
+  # --- openspec-e2e-mockup-kit ---
+  E2Eテスト: Playwright。実装規約は .claude/skills/e2e-conventions/SKILL.md に従う。
+  テストには必ず @<change-id> と @TP-NNN タグを付ける。
+  モック比較: モックルートは mockup/。比較テストは tests/e2e/support/mockup-compare.ts の compareWithMockup で書き、@<change-id> と @VC-NNN タグを付ける。
+  モック比較の差分超過は .claude/skills/mockup-compare-review/SKILL.md の手順でレビューする(閾値やテストは変更しない)。
+  # --- /openspec-e2e-mockup-kit ---
