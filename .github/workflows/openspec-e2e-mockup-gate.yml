@@ -1,0 +1,78 @@
+name: openspec-e2e-mockup-gate
+on:
+  workflow_call:
+    inputs:
+      base-ref:
+        type: string
+        default: origin/main
+      e2e-base-url:
+        type: string
+        default: http://localhost:3000
+      # npm / Playwright を実行するディレクトリ。package.json と playwright.config.*
+      # がリポジトリルートに無い構成(例: frontend/)ではここを指定する。
+      working-directory:
+        type: string
+        default: .
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: test-plan / mockup-compare とタグ付きテストの存在チェック
+        run: bash scripts/check-test-plan.sh "${{ inputs.base-ref }}"
+      - name: change-id の抽出
+        id: changes
+        env:
+          BASE_REF: ${{ inputs.base-ref }}
+        run: |
+          # change-id は openspec のあるリポジトリルート基準で拾う
+          ids=$(git diff --name-only "$BASE_REF"...HEAD -- 'openspec/changes/**' \
+            | grep -v '/archive/' | cut -d/ -f3 | sort -u | paste -sd'|' - || true)
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"
+      # npm ci は working-directory に package-lock.json があることが前提。
+      # lockfile が無い / npm 以外のパッケージマネージャを使うリポジトリでは
+      # このステップで失敗するため、その場合はこの reusable workflow を使わず
+      # 呼び出し側で同等のジョブを組むこと(README の「CI ゲート」を参照)。
+      - name: 依存インストール
+        working-directory: ${{ inputs.working-directory }}
+        run: npm ci && npx playwright install --with-deps chromium
+      - name: change スコープの E2E・モック比較の実行
+        working-directory: ${{ inputs.working-directory }}
+        env:
+          E2E_BASE_URL: ${{ inputs.e2e-base-url }}
+          IDS: ${{ steps.changes.outputs.ids }}
+        run: |
+          if [ -n "$IDS" ]; then
+            npx playwright test --grep "@($IDS)|@smoke"
+          else
+            npx playwright test --grep "@smoke"
+          fi
+      - name: モック比較レポートをジョブサマリーへ
+        # テストが失敗してもレポートは出す。change の差分が無い PR ではスキップする
+        if: always() && steps.changes.outputs.ids != ''
+        env:
+          IDS: ${{ steps.changes.outputs.ids }}
+        run: |
+          rc=0
+          for id in $(printf '%s' "$IDS" | tr '|' ' '); do
+            [ -f "openspec/changes/$id/mockup-compare.md" ] || continue
+            {
+              echo "## モック比較: $id"
+              echo
+              node scripts/mockup-report.mjs "$id" 2>&1 || r=$?
+              echo
+            } >> "$GITHUB_STEP_SUMMARY"
+            r=${r:-0}; [ "$r" -gt "$rc" ] && rc=$r; unset r
+          done
+          exit "$rc"
+      - name: 比較画像を artifact としてアップロード
+        if: always() && steps.changes.outputs.ids != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: mockup-compare-results
+          path: mockup-compare-results/
+          if-no-files-found: ignore

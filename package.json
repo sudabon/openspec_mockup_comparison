@@ -1,0 +1,27 @@
+{
+  "name": "openspec-e2e-mockup-kit",
+  "version": "0.1.0",
+  "description": "Bootstrap kit that distributes an OpenSpec composite schema (E2E test planning + mockup visual comparison), conventions skills, reporter scripts, a mockup comparison helper and a CI gate into an OpenSpec project.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "openspec-e2e-mockup-kit": "./install.mjs"
+  },
+  "scripts": {
+    "test": "bash test/selftest.sh"
+  },
+  "files": [
+    "install.mjs",
+    "payload",
+    "README.md",
+    "UPSTREAM.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.1",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  }
+}
