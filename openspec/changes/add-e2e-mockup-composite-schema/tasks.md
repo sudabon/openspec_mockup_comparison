@@ -33,7 +33,7 @@
 
 - [x] 5.1 `payload/scripts/mockup-report.mjs` を実装する。mockup-compare.md から VC-ID を抽出し、meta.json と突き合わせて表と欠落一覧を出す。終了コードは 0/1/2/3、`--max-age` は fail closed（検証: selftest で 4 系統の終了コードと鮮度判定）
 - [x] 5.2 `check-test-plan.sh` に、mockup-compare.md の存在検証と、VC-ID ごとの `@VC-NNN` タグ検証（比較対象なしの場合はスキップ）を追加する（検証: selftest で、不足時に exit 1、比較対象なしで exit 0）
-- [ ] 5.3 `.github/workflows/openspec-e2e-mockup-gate.yml` を作成する（存在検証 → change スコープの Playwright → mockup-report をジョブサマリーへ → mockup-compare-results を artifact へ）（検証: actionlint が通る。本リポジトリの PR からの dry 呼び出し、または `act` で実行できる）
+- [x] 5.3 `.github/workflows/openspec-e2e-mockup-gate.yml` を作成する（存在検証 → change スコープの Playwright → mockup-report をジョブサマリーへ → mockup-compare-results を artifact へ）（検証: actionlint が通る。本リポジトリの PR からの dry 呼び出し、または `act` で実行できる）
 
 ## 6. AI レビュースキル
 
