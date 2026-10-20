@@ -30,3 +30,9 @@ node_modules/
 
 # Mockup compare results
 **mockup-compare-results/
+=======
+node_modules/
+test-results/
+playwright-report/
+.tmp/
+.cursorrules

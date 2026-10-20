@@ -1,0 +1,51 @@
+# GitHub Actions example for openspec-mockup-comparison. Copy it to .github/workflows/ next to testkit's gate.
+# The comparison job runs in the reference image of openspec/mockup-policy.md; keep `container.image` and
+# mockup_reference_environment identical (name@sha256:digest).
+name: mockup-comparison
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  mockup-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Plan and final checks of the mockup changes
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: node scripts/mockup-gate.mjs check --base "origin/$BASE_REF"
+
+  mockup-compare:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.55.1-noble@sha256:2f29369043d81d6d69a815ceb80760f55e85f5020371ad06a4d996f18503ad1c
+    env:
+      MOCKUP_CONTAINER_IMAGE: mcr.microsoft.com/playwright:v1.55.1-noble@sha256:2f29369043d81d6d69a815ceb80760f55e85f5020371ad06a4d996f18503ad1c
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Trust the workspace inside the container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run the comparison tests in the reference image
+        run: npx playwright test --grep "@MK-"
+      - name: Keep the mockup, actual and diff images
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mockup-comparison
+          path: test-results/mockup/
+          retention-days: 14
+      - name: Reproduce the committed mockup-results.json
+        run: node scripts/mockup-gate.mjs verify --results test-results/mockup

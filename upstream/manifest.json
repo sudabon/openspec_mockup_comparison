@@ -1,0 +1,26 @@
+{
+  "vendored": [
+    {
+      "path": "payload/scripts/lib/mockup/vendor/pixelmatch.mjs",
+      "license": "payload/scripts/lib/mockup/vendor/pixelmatch.LICENSE",
+      "name": "pixelmatch",
+      "version": "5.3.0",
+      "spdx": "ISC",
+      "url": "https://github.com/mapbox/pixelmatch",
+      "note": "CommonJS の export 行だけを ES module の export に変更",
+      "sha256": "b584e9794b1b5b842cda0f6e857073d6c8e3068a1058bcf332c877743dc80cac",
+      "licenseSha256": "c6a01684eb9061a00589d483e9cf9ea5a82b3e8270f9992501ceb79f32753fb5"
+    },
+    {
+      "path": "payload/scripts/lib/mockup/vendor/yaml.mjs",
+      "license": "payload/scripts/lib/mockup/vendor/yaml.LICENSE",
+      "name": "yaml",
+      "version": "2.8.1",
+      "spdx": "ISC",
+      "url": "https://github.com/eemeli/yaml",
+      "note": "openspec-custom-testkit の payload/scripts/lib/vendor/yaml.mjs と同じ bundle",
+      "sha256": "d935c09dada0898398833e55e3faa5deadb485cf0cc68381f7e463ecdd039553",
+      "licenseSha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    }
+  ]
+}
